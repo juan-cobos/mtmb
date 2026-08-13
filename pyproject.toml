@@ -1,0 +1,43 @@
+[project]
+name = "mtmb"
+version = "0.1.0"
+description = "Splitting, exporting and validating the Multi-Task Mouse Behaviour Dataset"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Juan Cobos", email = "juan.cobos@igf.cnrs.fr" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "opencv-python>=5.0.0.93",
+    "supervision>=0.30.0",
+    "typer>=0.27.1",
+]
+
+[project.scripts]
+mtmb = "mtmb.cli:app"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.2",
+    "pytest>=8.4.2",
+    "ruff>=0.16.2",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 92
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "C4", "SIM", "RUF"]
+
+[build-system]
+requires = ["uv_build>=0.12.3,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mtmb"]
