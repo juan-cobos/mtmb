@@ -1,22 +1,22 @@
-<table>
+<table width="100%">
 <tr>
-<td align="center"><img src="assets/barnes_maze.gif" width="260"><br><code>Barnes Maze</code></td>
-<td align="center"><img src="assets/direct_interaction.gif" width="260"><br><code>Direct Interaction</code></td>
-<td align="center"><img src="assets/marble.gif" width="260"><br><code>Marble burrying</code></td>
+<td align="center" width="33%"><img src="assets/barnes_maze.gif" width="100%" style="max-width:260px"><br><code>Barnes Maze</code></td>
+<td align="center" width="33%"><img src="assets/direct_interaction.gif" width="100%" style="max-width:260px"><br><code>Direct Interaction</code></td>
+<td align="center" width="33%"><img src="assets/marble.gif" width="100%" style="max-width:260px"><br><code>Marble burrying</code></td>
 </tr>
 <tr>
-<td align="center"><img src="assets/nort.gif" width="260"><br><code>NORT</code></td>
-<td align="center"><img src="assets/nort2.gif" width="260"><br><code>NORT (2)</code></td>
-<td align="center"><img src="assets/open_field.gif" width="260"><br><code>Open Field</code></td>
+<td align="center"><img src="assets/nort.gif" width="100%" style="max-width:260px"><br><code>NORT</code></td>
+<td align="center"><img src="assets/nort2.gif" width="100%" style="max-width:260px"><br><code>NORT (2)</code></td>
+<td align="center"><img src="assets/open_field.gif" width="100%" style="max-width:260px"><br><code>Open Field</code></td>
 </tr>
 <tr>
-<td align="center"><img src="assets/social_interaction.gif" width="260"><br><code>Social Interaction</code></td>
-<td align="center"><img src="assets/t_maze.gif" width="260"><br><code>T-maze</code></td>
-<td align="center"><img src="assets/three_chamber.gif" width="260"><br><code>Three Chamber</code></td>
+<td align="center"><img src="assets/social_interaction.gif" width="100%" style="max-width:260px"><br><code>Social Interaction</code></td>
+<td align="center"><img src="assets/t_maze.gif" width="100%" style="max-width:260px"><br><code>T-maze</code></td>
+<td align="center"><img src="assets/three_chamber.gif" width="100%" style="max-width:260px"><br><code>Three Chamber</code></td>
 </tr>
 </table>
 
-Six-second clips, annotations overlaid (boxes, masks, keypoints, track ids).
+---
 
 # Multi-Task Mouse Behaviour Dataset (mtmb)
 
