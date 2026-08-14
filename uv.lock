@@ -545,7 +545,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "opencv-python", specifier = ">=5.0.0.93" },
+    { name = "opencv-python", specifier = ">=4.9" },
     { name = "supervision", specifier = ">=0.30.0" },
     { name = "typer", specifier = ">=0.27.1" },
 ]
