@@ -20,19 +20,19 @@ size_categories:
 
 <table>
 <tr>
-<td align="center"><img src="assets/barnes_maze.gif" width="260"><br><code>barnes_maze</code></td>
-<td align="center"><img src="assets/direct_interaction.gif" width="260"><br><code>direct_interaction</code></td>
-<td align="center"><img src="assets/marble.gif" width="260"><br><code>marble</code></td>
+<td align="center"><img src="https://huggingface.co/datasets/juancobos/MultiTaskMouseBehaviour/resolve/main/assets/barnes_maze.gif" width="260"><br><code>barnes_maze</code></td>
+<td align="center"><img src="https://huggingface.co/datasets/juancobos/MultiTaskMouseBehaviour/resolve/main/assets/direct_interaction.gif" width="260"><br><code>direct_interaction</code></td>
+<td align="center"><img src="https://huggingface.co/datasets/juancobos/MultiTaskMouseBehaviour/resolve/main/assets/marble.gif" width="260"><br><code>marble</code></td>
 </tr>
 <tr>
-<td align="center"><img src="assets/nort.gif" width="260"><br><code>nort</code></td>
-<td align="center"><img src="assets/nort2.gif" width="260"><br><code>nort2</code></td>
-<td align="center"><img src="assets/open_field.gif" width="260"><br><code>open_field</code></td>
+<td align="center"><img src="https://huggingface.co/datasets/juancobos/MultiTaskMouseBehaviour/resolve/main/assets/nort.gif" width="260"><br><code>nort</code></td>
+<td align="center"><img src="https://huggingface.co/datasets/juancobos/MultiTaskMouseBehaviour/resolve/main/assets/nort2.gif" width="260"><br><code>nort2</code></td>
+<td align="center"><img src="https://huggingface.co/datasets/juancobos/MultiTaskMouseBehaviour/resolve/main/assets/open_field.gif" width="260"><br><code>open_field</code></td>
 </tr>
 <tr>
-<td align="center"><img src="assets/social_interaction.gif" width="260"><br><code>social_interaction</code></td>
-<td align="center"><img src="assets/t_maze.gif" width="260"><br><code>t_maze</code></td>
-<td align="center"><img src="assets/three_chamber.gif" width="260"><br><code>three_chamber</code></td>
+<td align="center"><img src="https://huggingface.co/datasets/juancobos/MultiTaskMouseBehaviour/resolve/main/assets/social_interaction.gif" width="260"><br><code>social_interaction</code></td>
+<td align="center"><img src="https://huggingface.co/datasets/juancobos/MultiTaskMouseBehaviour/resolve/main/assets/t_maze.gif" width="260"><br><code>t_maze</code></td>
+<td align="center"><img src="https://huggingface.co/datasets/juancobos/MultiTaskMouseBehaviour/resolve/main/assets/three_chamber.gif" width="260"><br><code>three_chamber</code></td>
 </tr>
 </table>
 
@@ -122,14 +122,11 @@ Four of nine tasks are multi-animal.
 dataset/<task>/
   images/frame_00000.jpg ...        # consecutive decoded frames, 1280x720
   annotations.json                  # COCO: bbox, segmentation, track_id, keypoints
-  task.yaml                         # per-task metadata (see below)
-  viz/frame_00000.png               # per-frame overlays (derived)
-splits/<name>.json                  # split manifests -- the reproducible artifact
-build/                              # materialised exports (derived, git-ignored)
-udmt/                               # registry, merge, splits, exports, validation
+assets/<task>.gif                   # gallery previews for this card
 ```
 
-Per-task files are canonical; anything under `build/` is regenerable.
+One COCO file per task. Splits and training exports (e.g. RF-DETR layout) are
+built from these with the [`mtmb`](https://github.com/juan-cobos/mtmb) package.
 
 ### Annotation schema
 
