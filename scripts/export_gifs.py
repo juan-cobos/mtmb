@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
     dataset = MouseDataset()
     videos_dir = dataset.build_dir / "videos"
-    gifs_dir = dataset.path.parent / "assets"
+    gifs_dir = dataset.path.parent / "assets" / "gifs"
     videos = sorted(videos_dir.glob("*.mp4"))
     if not videos:
         raise SystemExit(f"no videos found in {videos_dir} -- run export_videos.py first")

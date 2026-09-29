@@ -1,18 +1,18 @@
 <table width="100%">
 <tr>
-<td align="center" width="33%"><img src="assets/barnes_maze.gif" width="100%" style="max-width:260px"><br><code>Barnes Maze</code></td>
-<td align="center" width="33%"><img src="assets/direct_interaction.gif" width="100%" style="max-width:260px"><br><code>Direct Interaction</code></td>
-<td align="center" width="33%"><img src="assets/marble.gif" width="100%" style="max-width:260px"><br><code>Marble burrying</code></td>
+<td align="center" width="33%"><img src="assets/gifs/barnes_maze.gif" width="100%" style="max-width:260px"><br><code>Barnes Maze</code></td>
+<td align="center" width="33%"><img src="assets/gifs/direct_interaction.gif" width="100%" style="max-width:260px"><br><code>Direct Interaction</code></td>
+<td align="center" width="33%"><img src="assets/gifs/marble.gif" width="100%" style="max-width:260px"><br><code>Marble burrying</code></td>
 </tr>
 <tr>
-<td align="center"><img src="assets/nort.gif" width="100%" style="max-width:260px"><br><code>NORT</code></td>
-<td align="center"><img src="assets/nort2.gif" width="100%" style="max-width:260px"><br><code>NORT (2)</code></td>
-<td align="center"><img src="assets/open_field.gif" width="100%" style="max-width:260px"><br><code>Open Field</code></td>
+<td align="center"><img src="assets/gifs/nort.gif" width="100%" style="max-width:260px"><br><code>NORT</code></td>
+<td align="center"><img src="assets/gifs/nort2.gif" width="100%" style="max-width:260px"><br><code>NORT (2)</code></td>
+<td align="center"><img src="assets/gifs/open_field.gif" width="100%" style="max-width:260px"><br><code>Open Field</code></td>
 </tr>
 <tr>
-<td align="center"><img src="assets/social_interaction.gif" width="100%" style="max-width:260px"><br><code>Social Interaction</code></td>
-<td align="center"><img src="assets/t_maze.gif" width="100%" style="max-width:260px"><br><code>T-maze</code></td>
-<td align="center"><img src="assets/three_chamber.gif" width="100%" style="max-width:260px"><br><code>Three Chamber</code></td>
+<td align="center"><img src="assets/gifs/social_interaction.gif" width="100%" style="max-width:260px"><br><code>Social Interaction</code></td>
+<td align="center"><img src="assets/gifs/t_maze.gif" width="100%" style="max-width:260px"><br><code>T-maze</code></td>
+<td align="center"><img src="assets/gifs/three_chamber.gif" width="100%" style="max-width:260px"><br><code>Three Chamber</code></td>
 </tr>
 </table>
 
