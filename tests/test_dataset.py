@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from mtmb.dataset import ALL_TASKS, OFFSET, MouseDataset, Task
+from mtmb.dataset import ALL_TASKS, HF_REPO_ID, OFFSET, MouseDataset, Task
 
 
 def test_task_index_matches_declaration_order():
@@ -82,3 +82,21 @@ def test_image_ids_every_keeps_every_nth(tiny_dataset: MouseDataset):
 def test_image_ids_rejects_bad_every(tiny_dataset: MouseDataset):
     with pytest.raises(ValueError, match="every"):
         tiny_dataset.image_ids("barnes_maze", every=0)
+
+
+def test_download_fetches_only_this_instances_tasks(monkeypatch, tiny_dataset):
+    import huggingface_hub
+
+    calls = []
+    monkeypatch.setattr(
+        huggingface_hub,
+        "snapshot_download",
+        lambda repo_id, **kwargs: calls.append({"repo_id": repo_id, **kwargs}),
+    )
+    assert tiny_dataset.download(revision="v1") == tiny_dataset.path
+    (call,) = calls
+    assert call["repo_id"] == HF_REPO_ID
+    assert call["repo_type"] == "dataset"
+    assert call["revision"] == "v1"
+    assert call["local_dir"] == tiny_dataset.path
+    assert call["allow_patterns"] == [f"{task.value}/*" for task in tiny_dataset.tasks]

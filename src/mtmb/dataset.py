@@ -24,6 +24,9 @@ DEFAULT_PATH = Path(__file__).resolve().parents[2] / "dataset"
 ANNOTATIONS = "annotations.json"
 SPLITS = ("train", "valid", "test")
 
+#: Where ``download`` fetches from; task directories sit at the repo root.
+HF_REPO_ID = "juancobos/MultiTaskMouseBehaviour"
+
 #: Id space reserved per task. Larger than any plausible frame or instance count,
 #: so global ids stay readable: 4_000_123 is task 4, original id 123.
 OFFSET = 1_000_000
@@ -272,9 +275,18 @@ class MouseDataset:
             manifest = self.load_manifest(manifest)
         return to_deeplabcut(self, manifest, out_dir, link, keypoint_threshold)
 
-    def download(self) -> Path:
-        """Fetch the dataset to ``self.path``. Not yet available."""
-        raise NotImplementedError("dataset download is not yet available")
+    def download(self, revision: str | None = None) -> Path:
+        """Fetch this instance's tasks from the Hugging Face Hub into ``self.path``."""
+        from huggingface_hub import snapshot_download
+
+        snapshot_download(
+            HF_REPO_ID,
+            repo_type="dataset",
+            revision=revision,
+            local_dir=self.path,
+            allow_patterns=[f"{task.value}/*" for task in self.tasks],
+        )
+        return self.path
 
 
 if __name__ == "__main__":  # python -m mtmb.dataset

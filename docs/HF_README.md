@@ -119,7 +119,7 @@ Four of nine tasks are multi-animal.
 ## Layout
 
 ```
-dataset/<task>/
+<task>/
   images/frame_00000.jpg ...        # consecutive decoded frames, 1280x720
   annotations.json                  # COCO: bbox, segmentation, track_id, keypoints
 assets/<task>.gif                   # gallery previews for this card

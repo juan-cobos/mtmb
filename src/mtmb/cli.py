@@ -7,7 +7,7 @@ from typing import Annotated
 
 import typer
 
-from mtmb.dataset import DEFAULT_PATH, MouseDataset, Task
+from mtmb.dataset import ALL_TASKS, DEFAULT_PATH, MouseDataset, Task
 from mtmb.manifest import Manifest
 from mtmb.merge import LinkMode
 from mtmb.splits import ValidMode
@@ -204,11 +204,16 @@ def tasks(
 
 @app.command()
 def download(
+    tasks: TasksOpt = None,
     dataset_path: DatasetOpt = None,
+    revision: Annotated[
+        str | None,
+        typer.Option("--revision", help="Hub commit or tag to fetch. Default: main."),
+    ] = None,
 ) -> None:
-    """Fetch the dataset. Not yet available."""
-    dataset = MouseDataset(dataset_path or DEFAULT_PATH)
-    dataset.download()
+    """Fetch the dataset from the Hugging Face Hub, skipping tasks already on disk."""
+    dataset = MouseDataset(dataset_path or DEFAULT_PATH, tasks=tuple(tasks or ALL_TASKS))
+    typer.echo(f"downloaded -> {dataset.download(revision)}")
 
 
 if __name__ == "__main__":
