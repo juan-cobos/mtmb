@@ -69,9 +69,16 @@ class MouseDataset:
     points inside site-packages.
     """
 
-    path: Path = DEFAULT_PATH
+    path: Path | str = DEFAULT_PATH
     tasks: tuple[Task, ...] = field(default=ALL_TASKS)
-    build_root: Path | None = None
+    build_root: Path | str | None = None
+
+    def __post_init__(self) -> None:
+        # Frozen, so coerced through ``object.__setattr__``: ``"data"`` reads as
+        # ``Path("data")`` everywhere ``path`` and ``build_root`` are joined.
+        object.__setattr__(self, "path", Path(self.path))
+        if self.build_root is not None:
+            object.__setattr__(self, "build_root", Path(self.build_root))
 
     @property
     def build_dir(self) -> Path:

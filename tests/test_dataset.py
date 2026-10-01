@@ -14,6 +14,13 @@ def test_task_index_matches_declaration_order():
         assert task.get_index() == i
 
 
+def test_paths_given_as_strings_become_paths(tiny_dataset: MouseDataset):
+    dataset = MouseDataset(str(tiny_dataset.path), build_root=str(tiny_dataset.build_dir))
+    assert dataset.path == tiny_dataset.path
+    assert dataset.build_dir == tiny_dataset.build_dir
+    assert dataset.task_dir("barnes_maze") == tiny_dataset.task_dir("barnes_maze")
+
+
 def test_task_coerces_string_and_rejects_unknown(tiny_dataset: MouseDataset):
     assert tiny_dataset.task("barnes_maze") is Task.barnes_maze
     with pytest.raises(KeyError):
@@ -141,3 +148,12 @@ def test_download_rejects_a_revision_without_archives(fake_hub, tiny_dataset):
     (remote / tiny_dataset.tasks[0].value / "images.tar").unlink()
     with pytest.raises(FileNotFoundError, match="predates packed frames"):
         local.download()
+
+
+def test_package_exposes_the_public_api():
+    import mtmb
+
+    assert mtmb.MouseDataset is MouseDataset
+    assert mtmb.Task is Task
+    assert mtmb.__version__
+    assert all(hasattr(mtmb, name) for name in mtmb.__all__)
