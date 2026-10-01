@@ -1,6 +1,7 @@
 ---
 pretty_name: Multi-Task Mouse Behaviour Dataset
 license: cc-by-nc-4.0
+viewer: false
 task_categories:
   - object-detection
   - image-segmentation
@@ -36,8 +37,6 @@ size_categories:
 </tr>
 </table>
 
-Six-second clips, annotations overlaid (boxes, masks, keypoints, track ids).
-
 # Multi-Task Mouse Behaviour Dataset
 
 Bounding boxes, instance masks, 27-point poses and persistent track ids for
@@ -52,7 +51,7 @@ under one category schema, from real recordings of running experiments.
 
 ## Where the annotations come from
 
-Every label is **machine-generated** by the DeepLabSAM pipeline.
+Every label is **machine-generated** by the [DeepLabSAM](https://github.com/juan-cobos/DeepLabSAM) pipeline.
 The pipeline is a two-stage composition:
 
 1. **Detection, segmentation and tracking — SAM 3 (video).** A text prompt
