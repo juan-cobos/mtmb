@@ -54,9 +54,10 @@ with a `manifest.json` recording exactly what produced it. Run `mtmb <command>
 ## Python API
 
 ```python
-from mtmb.dataset import MouseDataset
+from mtmb import MouseDataset
 
-dataset = MouseDataset()
+dataset = MouseDataset()  # ./dataset under the working directory; pass a path to move it
+dataset.download()        # fetches the tasks from the Hugging Face Hub
 manifest = dataset.split_by_task(train=["barnes_maze"], valid=["nort"], test=["t_maze"])
 dataset.build(manifest)
 ```

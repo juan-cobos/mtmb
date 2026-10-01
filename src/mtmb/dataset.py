@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from mtmb.manifest import Manifest
     from mtmb.splits import ValidMode
 
-DEFAULT_PATH = Path(__file__).resolve().parents[2] / "dataset"
+DEFAULT_PATH = Path("./dataset")
 
 #: A task's COCO annotations: boxes, segmentation and keypoints in one file.
 ANNOTATIONS = "annotations.json"
@@ -63,10 +63,9 @@ TASK_INDEX: dict[str, int] = {task.value: i for i, task in enumerate(ALL_TASKS)}
 class MouseDataset:
     """One dataset directory and the tasks to read out of it.
 
-    ``build_dir`` is where exports are written, one directory per split, each
-    carrying the manifest that produced it. It defaults beside ``path``; pass
-    ``build_root`` explicitly when the package is installed, since ``path`` then
-    points inside site-packages.
+    ``path`` defaults to ``./dataset``. ``build_dir`` is where exports are written,
+    one directory per split, each carrying the manifest that produced it; it
+    defaults beside ``path``, so ``./build`` unless ``build_root`` says otherwise.
     """
 
     path: Path | str = DEFAULT_PATH

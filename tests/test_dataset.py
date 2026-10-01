@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import pytest
 
@@ -157,3 +158,9 @@ def test_package_exposes_the_public_api():
     assert mtmb.Task is Task
     assert mtmb.__version__
     assert all(hasattr(mtmb, name) for name in mtmb.__all__)
+
+
+def test_default_paths_are_relative_to_the_working_directory():
+    dataset = MouseDataset()
+    assert dataset.path == Path("dataset")
+    assert dataset.build_dir == Path("build")
