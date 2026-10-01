@@ -211,7 +211,7 @@ def download(
         typer.Option("--revision", help="Hub commit or tag to fetch. Default: main."),
     ] = None,
 ) -> None:
-    """Fetch the dataset from the Hugging Face Hub, skipping tasks already on disk."""
+    """Fetch the dataset from the Hugging Face Hub, skipping tasks already current."""
     dataset = MouseDataset(dataset_path or DEFAULT_PATH, tasks=tuple(tasks or ALL_TASKS))
     typer.echo(f"downloaded -> {dataset.download(revision)}")
 

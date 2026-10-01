@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from mtmb.dataset import ALL_TASKS, HF_REPO_ID, OFFSET, MouseDataset, Task
@@ -84,19 +86,58 @@ def test_image_ids_rejects_bad_every(tiny_dataset: MouseDataset):
         tiny_dataset.image_ids("barnes_maze", every=0)
 
 
-def test_download_fetches_only_this_instances_tasks(monkeypatch, tiny_dataset):
-    import huggingface_hub
-
-    calls = []
-    monkeypatch.setattr(
-        huggingface_hub,
-        "snapshot_download",
-        lambda repo_id, **kwargs: calls.append({"repo_id": repo_id, **kwargs}),
-    )
-    assert tiny_dataset.download(revision="v1") == tiny_dataset.path
+def test_download_fetches_annotations_and_one_archive_per_task(fake_hub, tiny_dataset):
+    _, calls, local = fake_hub
+    assert local.download(revision="v1") == local.path
     (call,) = calls
     assert call["repo_id"] == HF_REPO_ID
     assert call["repo_type"] == "dataset"
     assert call["revision"] == "v1"
-    assert call["local_dir"] == tiny_dataset.path
-    assert call["allow_patterns"] == [f"{task.value}/*" for task in tiny_dataset.tasks]
+    assert call["local_dir"] == local.path
+    assert call["allow_patterns"] == [
+        f"{task.value}/{name}"
+        for task in tiny_dataset.tasks
+        for name in ("annotations.json", "images.tar")
+    ]
+    for task in tiny_dataset.tasks:
+        source = tiny_dataset.task_dir(task) / "images"
+        unpacked = local.task_dir(task) / "images"
+        assert sorted(p.name for p in source.iterdir()) == sorted(
+            p.name for p in unpacked.iterdir() if not p.name.startswith(".")
+        )
+        assert local.load_task(task) == tiny_dataset.load_task(task)
+
+
+def test_download_again_leaves_unchanged_tasks_alone(fake_hub, capsys):
+    _, _, local = fake_hub
+    local.download()
+    capsys.readouterr()
+    local.download()
+    assert "unpacked" not in capsys.readouterr().out
+
+
+def test_download_replaces_a_changed_task_whole(fake_hub, tiny_dataset):
+    from mtmb.hub import pack_images
+
+    remote, _, local = fake_hub
+    local.download()
+    task = tiny_dataset.tasks[0]
+    # Dropped upstream: out of the annotations, then off disk.
+    coco = tiny_dataset.load_task(task)
+    (dropped,) = [im for im in coco["images"] if im["file_name"].endswith("_00000.jpg")]
+    coco["images"].remove(dropped)
+    coco["annotations"] = [a for a in coco["annotations"] if a["image_id"] != dropped["id"]]
+    tiny_dataset.annotations_path(task).write_text(json.dumps(coco))
+    (tiny_dataset.task_dir(task) / dropped["file_name"]).unlink()
+    pack_images(tiny_dataset.task_dir(task), remote / task.value / "images.tar")
+
+    local.download()
+    assert not (local.task_dir(task) / "images" / "frame_00000.jpg").exists()
+    assert (local.task_dir(task) / "images" / "frame_00001.jpg").exists()
+
+
+def test_download_rejects_a_revision_without_archives(fake_hub, tiny_dataset):
+    remote, _, local = fake_hub
+    (remote / tiny_dataset.tasks[0].value / "images.tar").unlink()
+    with pytest.raises(FileNotFoundError, match="predates packed frames"):
+        local.download()

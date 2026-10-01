@@ -276,16 +276,37 @@ class MouseDataset:
         return to_deeplabcut(self, manifest, out_dir, link, keypoint_threshold)
 
     def download(self, revision: str | None = None) -> Path:
-        """Fetch this instance's tasks from the Hugging Face Hub into ``self.path``."""
+        """Fetch this instance's tasks from the Hugging Face Hub into ``self.path``.
+
+        Each task is its ``annotations.json`` and one ``images.tar``, unpacked into
+        the ``images/`` everything else reads. The archive stays on disk as the
+        Hub client's cache: a repeat call checks it against the remote and neither
+        downloads nor unpacks a task that has not changed.
+        """
         from huggingface_hub import snapshot_download
+
+        from mtmb.hub import IMAGES_ARCHIVE, unpack_images
 
         snapshot_download(
             HF_REPO_ID,
             repo_type="dataset",
             revision=revision,
             local_dir=self.path,
-            allow_patterns=[f"{task.value}/*" for task in self.tasks],
+            allow_patterns=[
+                f"{task.value}/{name}"
+                for task in self.tasks
+                for name in (ANNOTATIONS, IMAGES_ARCHIVE)
+            ],
         )
+        for task in self.tasks:
+            task_dir = self.task_dir(task)
+            if not (task_dir / IMAGES_ARCHIVE).exists():
+                raise FileNotFoundError(
+                    f"{HF_REPO_ID}@{revision or 'main'} has no {task.value}/"
+                    f"{IMAGES_ARCHIVE}; the revision predates packed frames",
+                )
+            if unpack_images(task_dir):
+                print(f"  unpacked {task.value}/{IMAGES_ARCHIVE}")
         return self.path
 
 

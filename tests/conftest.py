@@ -122,3 +122,44 @@ def tiny_dataset(tmp_path: Path) -> MouseDataset:
     for task in TASKS:
         _write_task(root / task.value)
     return MouseDataset(root, tasks=TASKS, build_root=tmp_path / "build")
+
+
+@pytest.fixture
+def fake_hub(monkeypatch, tmp_path: Path, tiny_dataset: MouseDataset):
+    """``tiny_dataset`` packed as the Hub ships it, and an empty instance to fetch it.
+
+    ``snapshot_download`` is replaced by a copy of the matching remote files that,
+    like the real client, leaves a local file alone when its contents match.
+    """
+    import fnmatch
+    import shutil
+
+    import huggingface_hub
+
+    from mtmb.hub import pack_images
+
+    remote = tmp_path / "remote"
+    for task in tiny_dataset.tasks:
+        pack_images(tiny_dataset.task_dir(task), remote / task.value / "images.tar")
+        shutil.copy2(tiny_dataset.annotations_path(task), remote / task.value)
+
+    calls = []
+
+    def snapshot_download(repo_id, *, local_dir, allow_patterns, **kwargs):
+        calls.append(
+            {"repo_id": repo_id, "local_dir": local_dir, "allow_patterns": allow_patterns}
+            | kwargs,
+        )
+        for path in remote.rglob("*"):
+            name = path.relative_to(remote).as_posix()
+            if path.is_dir() or not any(fnmatch.fnmatch(name, p) for p in allow_patterns):
+                continue
+            target = Path(local_dir) / name
+            if target.exists() and target.read_bytes() == path.read_bytes():
+                continue
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(path, target)
+
+    monkeypatch.setattr(huggingface_hub, "snapshot_download", snapshot_download)
+    local = MouseDataset(tmp_path / "local", tasks=tiny_dataset.tasks)
+    return remote, calls, local
