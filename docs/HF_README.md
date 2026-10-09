@@ -171,14 +171,16 @@ Recordings were collected at [IGF, CNRS](https://www.igf.cnrs.fr/) and [UPV/EHU]
 
 ## Citation
 
-A paper describing this dataset is in preparation. Citation details (BibTeX) will
-be added here on publication.
+If you use this dataset, please cite [the accompanying paper](https://www.biorxiv.org/content/10.64898/2026.10.02.756254v1):
 
 ```bibtex
-@dataset{mtmb,
-  title   = {Multi-Task Mouse Behaviour Dataset},
-  author  = {TBD},
-  year    = {TBD},
-  note    = {TBD},
+@article{Cobos2026.10.02.756254,
+  author    = {Cobos, Juan and Thirard, Steeve and Belkaid, Marwen and Naude, Jeremie},
+  title     = {A promptable foundation model enables automated multi-task dataset construction and real-time pose estimation in mice},
+  journal   = {bioRxiv},
+  year      = {2026},
+  publisher = {Cold Spring Harbor Laboratory},
+  doi       = {10.64898/2026.10.02.756254},
+  URL       = {https://www.biorxiv.org/content/10.64898/2026.10.02.756254v1}
 }
 ```

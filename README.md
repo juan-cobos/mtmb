@@ -20,6 +20,10 @@
 
 # Multi-Task Mouse Behaviour Dataset (mtmb)
 
+[![Paper](https://img.shields.io/badge/Paper-bioRxiv-b31b1b)](https://www.biorxiv.org/content/10.64898/2026.10.02.756254v1)
+[![Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-MultiTaskMouseBehaviour-ffd21e)](https://huggingface.co/datasets/juancobos/MultiTaskMouseBehaviour)
+[![Zenodo](https://img.shields.io/badge/Zenodo-23035460-1682d4)](https://zenodo.org/records/23035460)
+
 Tooling for the Multi-Task Mouse Behaviour Dataset: bounding boxes, instance
 masks, 27-point poses and persistent track ids for laboratory mice, on the same
 frames, across nine standard behavioural assays. 14,300 frames, 27,716 annotated
@@ -60,6 +64,22 @@ dataset = MouseDataset()  # ./dataset under the working directory; pass a path t
 dataset.download()        # fetches the tasks from the Hugging Face Hub
 manifest = dataset.split_by_task(train=["barnes_maze"], valid=["nort"], test=["t_maze"])
 dataset.build(manifest)
+```
+
+## Citation
+
+If you use this dataset, please cite [the accompanying paper](https://www.biorxiv.org/content/10.64898/2026.10.02.756254v1):
+
+```bibtex
+@article{Cobos2026.10.02.756254,
+  author    = {Cobos, Juan and Thirard, Steeve and Belkaid, Marwen and Naude, Jeremie},
+  title     = {A promptable foundation model enables automated multi-task dataset construction and real-time pose estimation in mice},
+  journal   = {bioRxiv},
+  year      = {2026},
+  publisher = {Cold Spring Harbor Laboratory},
+  doi       = {10.64898/2026.10.02.756254},
+  URL       = {https://www.biorxiv.org/content/10.64898/2026.10.02.756254v1}
+}
 ```
 
 ## License
